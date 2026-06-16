@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
               <span className="inline-block w-2 h-2 ml-1 bg-black rounded-full" />
             </div>
             <p className="text-sm text-gray-600 mt-2">
-              Data Analyst
+              Data Engineer | Software Developer
             </p>
           </div>
           

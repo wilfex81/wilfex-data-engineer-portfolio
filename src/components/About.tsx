@@ -13,25 +13,25 @@ const About: React.FC = () => {
   
   const skills = [
     "Python",
+    "Apache Airflow",
+    "dbt",
+    "PostgreSQL",
+    "SQLAlchemy",
     "Pandas",
-    "NumPy",
-    "Matplotlib",
-    "Seaborn",
+    "Star Schema Design",
+    "Data Modeling",
+    "Fact & Dimension Tables",
+    "Metabase",
+    "Docker",
+    "Git",
     "SQL",
-    "Excel",
-    "Power BI",
-    "Tableau",
-    "Jupyter Notebook",
-    "Scikit-learn",
-    "Data Cleaning",
-    "Data Visualization",
-    "Statistical Analysis",
-    "A/B Testing",
+    "ETL/ELT",
+    "Data Quality Testing",
   ];
   
   const experiences = [
     {
-      role: "Team Lead / Software Developer",
+      role: "Co-founder & Team Lead / Software Developer",
       company: "SongaBiz Holdings, Nairobi, KE",
       period: "May 2024 – Jan 2026",
       description:
@@ -57,8 +57,7 @@ const About: React.FC = () => {
             Background & Expertise
           </h2>
           <p className="max-w-2xl mx-auto text-muted-foreground leading-relaxed">
-            Data tools, professional journey, and an analysis-first approach to
-            solving business problems with evidence-driven decisions.
+            Data pipeline architecture, orchestration, and systems thinking - backed by a software engineering foundation in clean code, testing, and scalable design.
           </p>
         </div>
         
@@ -93,15 +92,13 @@ const About: React.FC = () => {
               style={{ transitionDelay: "0.6s" }}
             >
               <h4 className="text-xl font-semibold mb-4 tracking-tight">
-                Philosophy
+                Engineering Mindset
               </h4>
               <p className="text-muted-foreground mb-4 leading-relaxed">
-                Passionate about turning raw data into clear, actionable insights that drive better decisions. 
-                Believer in analytical rigor, reproducible workflows, and continuous learning.
+                I build systems, not queries. My SWE background in Django, APIs, Git workflows, and testing brings rigor and scalability to data architecture - designing pipelines that are reliable, testable, and maintainable at scale.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                My analysis approach focuses on asking the right questions, validating assumptions with data,
-                and communicating findings through intuitive dashboards and compelling visual storytelling.
+                I approach data problems end-to-end: raw ingestion → transformation → modeling → orchestration → consumption. Every component is intentional and designed for correctness and performance.
               </p>
             </div>
           </div>
@@ -142,11 +139,10 @@ const About: React.FC = () => {
               style={{ transitionDelay: "0.8s" }}
             >
               <h4 className="text-xl font-semibold mb-4 tracking-tight">
-                Analytics Engineering
+                SWE → Data Engineer
               </h4>
               <p className="text-muted-foreground leading-relaxed">
-                Experienced in building reliable data workflows with Python, SQL, and cloud infrastructure,
-                with a focus on scalable pipelines, reproducible analysis, and fast delivery of decision-ready insights.
+                My transition from backend development to data engineering is a strength, not a detour. I bring software engineering fundamentals-clean code, version control, testing, CI/CD-into data pipeline development, resulting in production-grade systems that scale reliably.
               </p>
             </div>
           </div>

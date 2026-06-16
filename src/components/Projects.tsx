@@ -35,346 +35,149 @@ const Projects: React.FC = () => {
 
   const projectsData: ProjectData[] = [
     {
-      title: "Customer Churn Analysis",
+      title: "E-commerce Data Pipeline",
       description:
-        "Excel-based churn analysis uncovering the strongest retention drivers across contract type, tenure, and billing behavior.",
-      techStack: ["Excel", "Data Analysis", "Pivot Tables", "Visualizations"],
-      liveLink: "https://github.com/wilfex81/Telco-Customer-Churn/tree/main",
-      images: [`${import.meta.env.BASE_URL}project-images/churn_rate.png`],
-      longDescription:
-        "This project analyzes customer churn to identify the key factors influencing retention.",
-      sections: [
-        {
-          title: "Project Overview",
-          paragraphs: [
-            "This project analyzes customer churn to identify key factors influencing customer retention. Using Excel pivot tables and visualizations, I determined who churns, why they churn, and which factors matter most for business decisions.",
-          ],
-        },
-        {
-          title: "The Dashboard",
-          paragraphs: [
-            "The dashboard provides a high-level view of customer churn patterns, highlighting the most influential factors affecting customer retention. It shows that churn is primarily driven by contract type, with month-to-month customers exhibiting significantly higher churn rates compared to customers on longer-term contracts.",
-            "Additional segmentation confirms that demographic factors such as gender have minimal impact on churn, allowing focus to remain on behavioral and contractual drivers. The dashboard is designed to support fast, data-driven decisions by clearly identifying high-risk customer groups and areas where retention efforts will have the greatest impact.",
-          ],
-        },
-        {
-          title: "About the Data",
-          paragraphs: [
-            "Source: Telecom Customer Churn dataset",
-          ],
-          bullets: [
-            "Customer ID",
-            "Churn status (Yes/No)",
-            "Contract type",
-            "Tenure",
-            "Monthly and total charges",
-            "Demographics (gender)",
-            "Services subscribed",
-          ],
-        },
-        {
-          title: "Key Findings",
-          cards: [
-            {
-              value: "26.5%",
-              title: "Overall Churn Rate",
-              description: "More than a quarter of customers churned during the analysis period.",
-            },
-            {
-              value: "42.7%",
-              title: "Month-to-Month Churn",
-              description: "Highest churn rate by far. One-year contracts: 11.3%. Two-year: just 2.8%.",
-            },
-            {
-              value: "~0%",
-              title: "Gender Impact",
-              description: "Female: 26.92% vs Male: 26.16% - gender is not a meaningful driver.",
-            },
-          ],
-        },
-        {
-          title: "Key Insights",
-          cards: [
-            {
-              title: "Contract Type is the Strongest Driver",
-              description: "Longer contracts dramatically reduce churn. The difference between month-to-month (42.7%) and two-year contracts (2.8%) is massive.",
-            },
-            {
-              title: "Gender Has No Impact",
-              description: "Churn rates are nearly identical across genders, so this variable can be deprioritized in retention strategies.",
-            },
-            {
-              title: "Actionable Focus",
-              description: "Prioritize migrating month-to-month customers to longer-term contracts for the highest retention impact.",
-            },
-          ],
-        },
-        {
-          title: "Tools & Technologies",
-          bullets: [
-            "Microsoft Excel",
-            "Pivot Tables",
-            "Calculated Percentages",
-            "Column Charts",
-            "Dashboard Design",
-          ],
-        },
-        {
-          title: "Business Recommendations",
-          bullets: [
-            "Focus retention efforts on month-to-month customers",
-            "Encourage migration to longer-term contracts through incentives",
-            "Avoid demographic-based churn strategies - they won't move the needle",
-            "Prioritize variables with measurable behavioral influence",
-          ],
-        },
-        {
-          title: "Conclusion",
-          paragraphs: [
-            "This analysis demonstrates a structured, hypothesis-driven approach emphasizing signal over noise to deliver clear, decision-focused insights for business environments.",
-          ],
-        },
-      ],
-      rating: 5,
-    },
-    {
-      title: "Exploratory Data Analysis",
-      description:
-        "SQL-driven analysis of 2022 layoffs data to clean the dataset and uncover industry, timing, and company-stage patterns.",
-      techStack: ["SQL", "Data Analysis", "Window Functions", "Data Cleaning"],
-      liveLink: "https://github.com/wilfex81/SQL_DATA_CLEANING_FIRST_EXERCISE/blob/main/Exploratory%20Data%20Analysis.sql",
-      images: [`${import.meta.env.BASE_URL}project-images/eda.jpg`],
-      longDescription:
-        "This project explores a 2022 layoffs dataset using SQL to clean the data and uncover meaningful patterns in company downsizing.",
-      sections: [
-        {
-          title: "Project Overview",
-          paragraphs: [
-            "This project involved conducting comprehensive exploratory data analysis on a 2022 layoffs dataset to uncover hidden patterns, trends, and outliers. Using SQL queries, I identified key insights into industry-specific downsizing patterns and seasonal layoff trends.",
-          ],
-        },
-        {
-          title: "About the Data",
-          paragraphs: [
-            "The dataset captures layoff events from various companies throughout 2022, including:",
-          ],
-          bullets: [
-            "Company names and industries",
-            "Layoff dates and announcement details",
-            "Number of employees affected",
-            "Company location and headquarters",
-            "Company stage (startup, established, etc.)",
-            "Funding information",
-          ],
-        },
-        {
-          title: "The Process",
-          paragraphs: [
-            "Before analysis, the data underwent thorough cleaning using SQL:",
-          ],
-          bullets: [
-            "Removed duplicate records using ROW_NUMBER() window function",
-            "Standardized company names and industry categories",
-            "Handled NULL values appropriately",
-            "Converted date strings to proper DATE format",
-            "Validated numerical fields for consistency",
-          ],
-          code: "-- Example: Removing duplicates\nWITH duplicates AS (\n    SELECT *,\n           ROW_NUMBER() OVER(\n               PARTITION BY company, location, industry, date\n               ORDER BY company\n           ) AS row_num\n    FROM layoffs_staging\n)\nDELETE FROM duplicates WHERE row_num > 1;",
-        },
-        {
-          title: "Exploratory Analysis",
-          paragraphs: [
-            "The EDA phase involved asking and answering key questions about the data:",
-          ],
-          bullets: [
-            "Which industries were most affected by layoffs?",
-            "What was the temporal distribution of layoffs?",
-            "Which companies had the largest layoffs?",
-            "How did layoffs vary by company stage?",
-            "Were there geographic patterns in the data?",
-          ],
-        },
-        {
-          title: "Pattern Discovery",
-          paragraphs: [
-            "Using aggregations, groupings, and window functions to discover patterns:",
-          ],
-          code: "-- Monthly layoff trends\nSELECT \n    DATE_FORMAT(date, '%Y-%m') AS month,\n    SUM(total_laid_off) AS monthly_layoffs\nFROM layoffs_staging\nWHERE date IS NOT NULL\nGROUP BY month\nORDER BY month;",
-        },
-        {
-          title: "Key Findings",
-          cards: [
-            {
-              title: "Industry Impact",
-              description: "Layoffs were concentrated in a relatively small number of industries, with the analysis showing that sector and company type were major drivers of impact.",
-            },
-            {
-              title: "Seasonal Patterns",
-              description: "Layoff activity changed noticeably over time, with clear spikes that align with broader market pressure and economic uncertainty.",
-            },
-            {
-              title: "Company Stage",
-              description: "The dataset includes a mix of startup and established companies, showing that layoffs affected organizations at different maturity levels.",
-            },
-            {
-              title: "Geographic Distribution",
-              description: "The layoffs were not evenly distributed geographically, with clear clusters appearing across specific regions and headquarters locations.",
-            },
-          ],
-        },
-        {
-          title: "SQL Techniques Used",
-          cards: [
-            {
-              title: "Window Functions",
-              description: "ROW_NUMBER(), RANK(), running totals with SUM() OVER()",
-            },
-            {
-              title: "CTEs",
-              description: "Common Table Expressions for complex multi-step queries",
-            },
-            {
-              title: "Aggregations",
-              description: "GROUP BY, HAVING, COUNT, SUM, AVG for statistical summaries",
-            },
-            {
-              title: "Date Functions",
-              description: "DATE_FORMAT, YEAR, MONTH for temporal analysis",
-            },
-          ],
-        },
-        {
-          title: "Tools & Technologies",
-          bullets: ["SQL", "MySQL", "Data Cleaning", "Window Functions", "CTEs"],
-        },
-        {
-          title: "Conclusion & Insights",
-          paragraphs: [
-            "This exploratory analysis revealed several important insights about the 2022 layoff landscape:",
-          ],
-          bullets: [
-            "Industry and company-type patterns were the most visible sources of layoff concentration",
-            "Temporal trends suggested that workforce reductions moved in step with broader economic pressure",
-            "Regional clustering showed that layoffs were concentrated rather than evenly spread",
-            "The analysis can support workforce planning, risk assessment, and operational forecasting",
-          ],
-        },
-      ],
-      rating: 5,
-    },
-    {
-      title: "Retail Sales Performance Analysis",
-      description:
-        "Interactive Excel dashboard that transforms raw retail sales data into clear performance metrics, trends, and decision-ready insights.",
-      techStack: ["Excel", "Data Analysis", "Dashboard Design", "Financial Insights"],
-      liveLink: "https://github.com/wilfex81/Sales-Revenue-Analysis?tab=readme-ov-file#dashboard",
+        "End-to-end ETL pipeline processing 96K+ orders from raw CSV → PostgreSQL → dbt transformations → Airflow orchestration → Metabase analytics.",
+      techStack: ["Python", "Pandas", "SQLAlchemy", "PostgreSQL", "dbt", "Apache Airflow", "Metabase", "Docker"],
+      liveLink: "https://github.com/wilfex81/ecommerce-pipeline",
       images: [`${import.meta.env.BASE_URL}project-images/Dashboard.png`],
       longDescription:
-        "This project cleans raw retail sales data and turns it into an interactive Excel dashboard built for quick business review.",
+        "Production-grade data pipeline for Brazilian Olist e-commerce dataset, featuring raw ingestion, staged transformations, dimensional modeling, and daily orchestration.",
       sections: [
         {
           title: "Project Overview",
           paragraphs: [
-            "This project focused on cleaning raw sales data and transforming it into an interactive Excel dashboard. The dashboard provides key financial insights, trends, and performance metrics that enable better decision-making for retail stakeholders.",
+            "A complete data engineering pipeline built with industry-standard tools: Python ingestion scripts, PostgreSQL schemas (raw → staging → marts), dbt for transformation and testing, Apache Airflow for daily orchestration, and Metabase for business visualization. The system processes 96,476 orders with 91.89% on-time delivery tracking and R$3.67M in total revenue.",
+            "This project demonstrates real data engineering: designing reliable systems, thinking about data quality and lineage, orchestrating workflows, and building analytics infrastructure that business teams depend on.",
           ],
         },
         {
-          title: "About the Data",
-          paragraphs: ["The dataset contains retail sales transactions including:"],
+          title: "Architecture & Design",
+          paragraphs: [
+            "The pipeline follows a modern medallion architecture: raw data layer (untransformed CSVs), staging layer (cleaned, deduplicated views), and mart layer (dimensional models for analytics).",
+          ],
           bullets: [
-            "Transaction dates and timestamps",
-            "Product categories and SKUs",
-            "Sales amounts and quantities",
-            "Regional and store information",
-            "Customer segments",
+            "Raw schema: 8 tables from original Olist datasets",
+            "Staging: 7 cleaned intermediate views with data quality checks",
+            "Marts: Star schema with 1 fact table (fct_orders) and 3 dimension tables (dim_customers, dim_products, dim_dates)",
+            "PostgreSQL for structured, versioned data storage",
           ],
         },
         {
-          title: "The Process",
-          paragraphs: ["The raw data required extensive cleaning before analysis:"],
-          bullets: [
-            "Identified and removed duplicate transactions",
-            "Corrected data type inconsistencies",
-            "Handled missing values in key fields",
-            "Standardized date formats and categories",
-            "Created calculated columns for analysis",
-          ],
-        },
-        {
-          title: "Dashboard Design",
-          paragraphs: ["The dashboard was designed with usability and clarity in mind:"],
-          bullets: [
-            "Created a clear visual hierarchy",
-            "Used consistent color coding for metrics",
-            "Added interactive slicers for filtering",
-            "Included KPI cards for at-a-glance insights",
-          ],
-        },
-        {
-          title: "Visualization Components",
-          paragraphs: ["The dashboard includes several visualization types:"],
-          bullets: [
-            "Line charts for trend analysis",
-            "Bar charts for category comparisons",
-            "Pie charts for composition breakdown",
-            "KPI indicators for performance tracking",
-          ],
-        },
-        {
-          title: "Key Findings",
+          title: "Data Pipeline Stages",
           cards: [
             {
-              value: "$2.30M",
+              title: "Ingestion",
+              description: "Python scripts with Pandas and SQLAlchemy load raw Kaggle CSV files into PostgreSQL raw schema daily.",
+            },
+            {
+              title: "Staging",
+              description: "dbt staging models clean, deduplicate, and prepare data. 7 views handle type casting, NULL handling, and business logic validation.",
+            },
+            {
+              title: "Modeling",
+              description: "dbt mart models build a dimensional star schema optimized for analytics queries and Metabase dashboards.",
+            },
+            {
+              title: "Orchestration",
+              description: "Apache Airflow DAG schedules daily runs, manages dependencies, and monitors SLAs for 24/7 reliability.",
+            },
+          ],
+        },
+        {
+          title: "Key Metrics Dashboard",
+          cards: [
+            {
+              value: "96,476",
+              title: "Total Orders",
+              description: "Complete e-commerce transaction history from Brazilian marketplace.",
+            },
+            {
+              value: "92%",
+              title: "On-Time Delivery Rate",
+              description: "Consistent delivery performance tracked across all orders and logistics partners.",
+            },
+            {
+              value: "R$3.67M",
               title: "Total Revenue",
-              description: "The dashboard shows total sales revenue of $2,297,200.86 across the reporting period.",
-            },
-            {
-              value: "$598.66K",
-              title: "Total Profit",
-              description: "Profit significantly outpaced losses, with total profit at $598,659.59 versus $156,131.29 in losses.",
-            },
-            {
-              value: "12,266",
-              title: "West Region Volume",
-              description: "The West region recorded the highest quantity at 12,266 units, making it the strongest regional market.",
+              description: "Aggregate transaction value across all order dates.",
             },
           ],
         },
         {
-          title: "Dashboard Features",
+          title: "Business Insights",
           cards: [
             {
-              title: "Interactive Filters",
-              description: "Users can filter data by date range, region, product category, and customer segment.",
+              title: "Regional Revenue Drivers",
+              description: "São Paulo (SP) and Rio de Janeiro (RJ) drive the majority of marketplace revenue. Regional analysis guides fulfillment and logistics strategy.",
             },
             {
-              title: "KPI Tracking",
-              description: "Real-time KPI cards showing total sales, average order value, and growth metrics.",
+              title: "Top Product Categories",
+              description: "Watches/gifts and sports/leisure dominate by revenue. Product-level dashboards enable inventory optimization and category expansion planning.",
             },
             {
-              title: "Trend Analysis",
-              description: "Visual trend lines showing performance over time with month-over-month comparisons.",
+              title: "Delivery Performance",
+              description: "92% on-time delivery rate tracked by carrier and region. Identifies logistics bottlenecks and partnership performance.",
             },
           ],
         },
         {
-          title: "Tools & Technologies",
+          title: "Technical Implementation",
           bullets: [
-            "Microsoft Excel",
-            "Pivot Tables",
-            "Charts & Graphs",
-            "Slicers",
-            "Conditional Formatting",
+            "Python (Pandas, SQLAlchemy): Ingestion and data loading with error handling",
+            "PostgreSQL: Multi-schema architecture (raw, staging, marts) with indexes and constraints",
+            "dbt: 7 staging models + 4 mart models with data quality tests and documentation",
+            "Apache Airflow: DAG with daily schedule, dependency management, and failure notifications",
+            "Metabase: Interactive dashboard connected to marts schema for business self-service",
+            "Docker: Container-based deployment for reproducibility and portability",
+            "Git: Version control for all code, dbt models, and Airflow DAGs",
           ],
         },
         {
-          title: "Conclusion & Business Impact",
-          paragraphs: ["This dashboard provides stakeholders with actionable insights for decision-making:"],
+          title: "Data Quality & Testing",
           bullets: [
-            "Standard Class dominates shipping performance with $1,358,215.74 in sales, while First Class, Second Class, and Same Day remain meaningful secondary channels",
-            "Quantity is strongest in the West and East regions, with the South trailing behind the other markets",
-            "Sales, profit, and loss views together provide a balanced picture of where the business is performing well and where it needs attention",
-            "The dashboard supports faster inventory, logistics, and planning decisions by making the main operational metrics visible at a glance",
+            "dbt tests: NOT NULL, unique, and referential integrity checks on all models",
+            "Staging validation: Deduplicate records, validate date ranges, check for data quality issues",
+            "Mart contracts: Dimension and fact table relationships enforced at schema level",
+            "Airflow SLA monitoring: Alerts on delayed runs or failed DAG tasks",
+          ],
+        },
+        {
+          title: "Airflow Orchestration",
+          paragraphs: [
+            "Apache Airflow manages the daily pipeline workflow: ingest raw CSV data → run dbt staging transformations → build mart models → refresh Metabase dashboards. The DAG is production-ready with dependency management, failure notifications, and SLA monitoring.",
+          ],
+          bullets: [
+            "Daily scheduled DAG (currently running manual + scheduled variants)",
+            "Clear task dependencies: ingestion → staging → marts → dashboard refresh",
+            "Error handling and retry logic for reliability",
+            "Logging and monitoring for debugging and performance tracking",
+          ],
+        },
+        {
+          title: "Engineering Practices",
+          bullets: [
+            "Schema separation: Clear boundaries between raw ingestion, transformation, and consumption",
+            "Idempotent transformations: Safe to rerun without causing data duplication or inconsistency",
+            "Documentation: dbt YAML configs describe every table and column with lineage",
+            "Versioning: Git history tracks all pipeline changes; easy rollback and collaboration",
+            "Monitoring: Airflow logs, dbt test reports, and dashboard freshness indicators",
+          ],
+        },
+        {
+          title: "Why This Matters",
+          paragraphs: [
+            "This project illustrates the difference between analysis and engineering: it's not just about the dashboards. The pipeline is reliable, testable, and maintainable. New analysts can trust the data because the transformations are documented, tested, and reproducible. Stakeholders get fresh insights daily because Airflow handles orchestration automatically. New business questions can be answered quickly because the marts are modeled for analytics.",
+            "The system scales — adding new data sources, new transformations, or new dashboards follows established patterns. This is how real data teams work.",
+          ],
+        },
+        {
+          title: "Repository & Resources",
+          bullets: [
+            "GitHub: github.com/wilfex81/ecommerce-pipeline",
+            "Dataset: Brazilian Olist E-Commerce Public Dataset (Kaggle, 2016-2018)",
+            "Documentation: dbt docs auto-generated from YAML configs",
+            "Live Dashboard: Metabase connected to production marts schema",
           ],
         },
       ],
@@ -401,11 +204,11 @@ const Projects: React.FC = () => {
             Selected Work
           </p>
           <h2 className="text-3xl md:text-4xl font-light tracking-tight mb-6">
-            Data Analysis Projects
+            Data Engineering
           </h2>
           <p className="max-w-2xl mx-auto text-muted-foreground leading-relaxed">
-            A collection of data analysis projects showcasing expertise in Excel dashboards, 
-            SQL analysis, and deriving actionable insights from complex datasets.
+            Production-grade pipelines, dimensional modeling, and data infrastructure designed to scale. 
+            Building the systems that power analytics and business decisions.
           </p>
         </div>
 

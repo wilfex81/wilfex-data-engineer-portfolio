@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
         <div className="text-center space-y-8">
           <div className="space-y-4">
             <p className="text-sm font-medium text-muted-foreground tracking-wide uppercase">
-              Data Analyst
+              Data Engineer
             </p>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight">
@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
-              Turning raw data into clear business insight through SQL, Python, and dashboards that help teams make confident, evidence-based decisions.
+              Software engineer turned data engineer. Building robust data pipelines, designing scalable architectures, and orchestrating systems that transform raw data into reliable business assets.
             </p>
           </div>
           

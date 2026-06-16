@@ -1,4 +1,4 @@
-# Wilfex Kipchirchir - Data Analyst Portfolio
+# Wilfex Kipchirchir - Data Engineer Portfolio
 
 This repository contains a portfolio site built to showcase data analysis work, project case studies, and professional background. The site is focused on turning raw data into clear business insight through Excel dashboards, SQL analysis, visual storytelling, and practical decision support.
 
