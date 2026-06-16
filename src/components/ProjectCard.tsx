@@ -225,6 +225,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                   </p>
                 ))}
 
+                {section.images && section.images.length > 0 && (
+                  <div className="space-y-2">
+                    {section.images.map((image, imageIndex) => (
+                      <img
+                        key={`${section.title}-img-${imageIndex}`}
+                        src={image}
+                        alt={`${section.title} image ${imageIndex + 1}`}
+                        className="w-full h-auto rounded-lg border border-border/40"
+                      />
+                    ))}
+                  </div>
+                )}
+
                 {section.bullets && (
                   <ul className="list-disc pl-5 space-y-2 text-foreground/90 leading-relaxed text-base">
                     {section.bullets.map((bullet, bulletIndex) => (

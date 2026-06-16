@@ -14,6 +14,7 @@ interface ProjectData {
     title: string;
     paragraphs?: string[];
     bullets?: string[];
+    images?: string[];
     cards?: Array<{
       title: string;
       description: string;
@@ -40,7 +41,7 @@ const Projects: React.FC = () => {
         "End-to-end ETL pipeline processing 96K+ orders from raw CSV → PostgreSQL → dbt transformations → Airflow orchestration → Metabase analytics.",
       techStack: ["Python", "Pandas", "SQLAlchemy", "PostgreSQL", "dbt", "Apache Airflow", "Metabase", "Docker"],
       liveLink: "https://github.com/wilfex81/ecommerce-pipeline",
-      images: [`${import.meta.env.BASE_URL}project-images/Dashboard.png`],
+      images: [`${import.meta.env.BASE_URL}project-images/dashboard.png`],
       longDescription:
         "Production-grade data pipeline for Brazilian Olist e-commerce dataset, featuring raw ingestion, staged transformations, dimensional modeling, and daily orchestration.",
       sections: [
@@ -56,6 +57,7 @@ const Projects: React.FC = () => {
           paragraphs: [
             "The pipeline follows a modern medallion architecture: raw data layer (untransformed CSVs), staging layer (cleaned, deduplicated views), and mart layer (dimensional models for analytics).",
           ],
+          images: [`${import.meta.env.BASE_URL}project-images/ecommerce_pipeline_architecture.svg`],
           bullets: [
             "Raw schema: 8 tables from original Olist datasets",
             "Staging: 7 cleaned intermediate views with data quality checks",
@@ -147,6 +149,7 @@ const Projects: React.FC = () => {
           paragraphs: [
             "Apache Airflow manages the daily pipeline workflow: ingest raw CSV data → run dbt staging transformations → build mart models → refresh Metabase dashboards. The DAG is production-ready with dependency management, failure notifications, and SLA monitoring.",
           ],
+          images: [`${import.meta.env.BASE_URL}project-images/airflow_image.png`],
           bullets: [
             "Daily scheduled DAG (currently running manual + scheduled variants)",
             "Clear task dependencies: ingestion → staging → marts → dashboard refresh",
