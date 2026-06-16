@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://wilfex81.github.io/data_analysis_portfolio/sitemap.xml
+Sitemap: https://wilfex81.github.io/wilfex-data-engineer-portfolio/sitemap.xml

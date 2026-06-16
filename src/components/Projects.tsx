@@ -40,7 +40,7 @@ const Projects: React.FC = () => {
       description:
         "End-to-end ETL pipeline processing 96K+ orders from raw CSV → PostgreSQL → dbt transformations → Airflow orchestration → Metabase analytics.",
       techStack: ["Python", "Pandas", "SQLAlchemy", "PostgreSQL", "dbt", "Apache Airflow", "Metabase", "Docker"],
-      liveLink: "https://github.com/wilfex81/ecommerce-pipeline",
+      liveLink: "https://github.com/wilfex81/ecommerce_pipeline",
       images: [`${import.meta.env.BASE_URL}project-images/dashboard.png`],
       longDescription:
         "Production-grade data pipeline for Brazilian Olist e-commerce dataset, featuring raw ingestion, staged transformations, dimensional modeling, and daily orchestration.",
@@ -170,17 +170,16 @@ const Projects: React.FC = () => {
         {
           title: "Why This Matters",
           paragraphs: [
-            "This project illustrates the difference between analysis and engineering: it's not just about the dashboards. The pipeline is reliable, testable, and maintainable. New analysts can trust the data because the transformations are documented, tested, and reproducible. Stakeholders get fresh insights daily because Airflow handles orchestration automatically. New business questions can be answered quickly because the marts are modeled for analytics.",
-            "The system scales — adding new data sources, new transformations, or new dashboards follows established patterns. This is how real data teams work.",
+            "This project illustrates the difference between analysis and engineering. The pipeline is reliable, testable, and maintainable. New analysts can trust the data because the transformations are documented, tested, and reproducible. Stakeholders get fresh insights daily because Airflow handles orchestration automatically. New business questions can be answered quickly because the marts are modeled for analytics.",
+            "The system scales - adding new data sources, new transformations, or new dashboards follows established patterns.",
           ],
         },
         {
           title: "Repository & Resources",
-          bullets: [
-            "GitHub: github.com/wilfex81/ecommerce-pipeline",
+          paragraphs: [
+            "GitHub: github.com/wilfex81/ecommerce_pipeline",
             "Dataset: Brazilian Olist E-Commerce Public Dataset (Kaggle, 2016-2018)",
-            "Documentation: dbt docs auto-generated from YAML configs",
-            "Live Dashboard: Metabase connected to production marts schema",
+            "Documentation: dbt docs auto-generated from YAML configs"
           ],
         },
       ],

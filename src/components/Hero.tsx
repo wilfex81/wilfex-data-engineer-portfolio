@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
-              Software engineer turned data engineer. Building robust data pipelines, designing scalable architectures, and orchestrating systems that transform raw data into reliable business assets.
+            Data engineer with a software engineering foundation. Building pipelines, modeling data, and orchestrating systems that turn raw data into reliable business insights.
             </p>
           </div>
           

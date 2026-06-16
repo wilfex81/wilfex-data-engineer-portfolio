@@ -94,11 +94,8 @@ const About: React.FC = () => {
               <h4 className="text-xl font-semibold mb-4 tracking-tight">
                 Engineering Mindset
               </h4>
-              <p className="text-muted-foreground mb-4 leading-relaxed">
-                I build systems, not queries. My SWE background in Django, APIs, Git workflows, and testing brings rigor and scalability to data architecture - designing pipelines that are reliable, testable, and maintainable at scale.
-              </p>
               <p className="text-muted-foreground leading-relaxed">
-                I approach data problems end-to-end: raw ingestion → transformation → modeling → orchestration → consumption. Every component is intentional and designed for correctness and performance.
+                My software engineering background means I bring real development practices to data work: clean code, version control, and testable pipelines. I think end-to-end: from raw ingestion to transformation, modeling, orchestration, and delivery.
               </p>
             </div>
           </div>

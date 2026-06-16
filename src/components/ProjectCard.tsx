@@ -14,6 +14,7 @@ interface ProjectCardProps {
     title: string;
     paragraphs?: string[];
     bullets?: string[];
+    images?: string[];
     cards?: Array<{
       title: string;
       description: string;
@@ -219,11 +220,34 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               <div key={section.title} className="space-y-4">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h3>
 
-                {section.paragraphs?.map((paragraph, paragraphIndex) => (
-                  <p key={`${section.title}-p-${paragraphIndex}`} className="text-foreground/90 leading-relaxed text-base">
-                    {paragraph}
-                  </p>
-                ))}
+                {section.paragraphs?.map((paragraph, paragraphIndex) => {
+                  // Convert URLs to clickable links
+                  const urlPattern = /(https?:\/\/[^\s]+|github\.com\/[\w-]+\/[\w-]+)/g;
+                  const parts = paragraph.split(urlPattern);
+                  
+                  return (
+                    <p key={`${section.title}-p-${paragraphIndex}`} className="text-foreground/90 leading-relaxed text-base">
+                      {parts.map((part, idx) => {
+                        if (!part) return null;
+                        if (part.match(/^https?:\/\/|^github\.com\//)) {
+                          const url = part.startsWith('http') ? part : `https://${part}`;
+                          return (
+                            <a 
+                              key={idx}
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline transition-colors"
+                            >
+                              {part}
+                            </a>
+                          );
+                        }
+                        return part;
+                      })}
+                    </p>
+                  );
+                })}
 
                 {section.images && section.images.length > 0 && (
                   <div className="space-y-2">
