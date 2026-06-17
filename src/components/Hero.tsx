@@ -18,8 +18,23 @@ const Hero: React.FC = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
-            Data engineer with a software engineering foundation. Building pipelines, modeling data, and orchestrating systems that turn raw data into reliable business insights.
+            Certified Data engineer with a software engineering foundation. Building pipelines, modeling data, and orchestrating systems that turn raw data into reliable business insights.
             </p>
+            
+            <div className="flex items-center justify-center pt-4">
+              <a 
+                href="https://www.datacamp.com/certificate/DE0016267508115"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform hover:scale-110"
+              >
+                <img 
+                  src="/project-images/datacamp-certified-badge.png" 
+                  alt="DataCamp Certified Data Engineer" 
+                  className="h-32 w-32 drop-shadow-lg"
+                />
+              </a>
+            </div>
           </div>
           
           <div className="flex justify-center pt-8">
