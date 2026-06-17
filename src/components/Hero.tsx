@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ArrowDown } from 'lucide-react';
+import dataCampBadge from '../../public/project-images/datacamp-certified-badge.png';
 
 const Hero: React.FC = () => {
 
@@ -29,7 +30,7 @@ const Hero: React.FC = () => {
                 className="inline-block transition-transform hover:scale-110"
               >
                 <img 
-                  src="/project-images/datacamp-certified-badge.png" 
+                  src={dataCampBadge}
                   alt="DataCamp Certified Data Engineer" 
                   className="h-32 w-32 drop-shadow-lg"
                 />
