@@ -36,6 +36,55 @@ const Projects: React.FC = () => {
 
   const projectsData: ProjectData[] = [
     {
+      title: "Event Ingestion Pipeline",
+      description:
+        "ETL pipeline that parses JSON event payloads and flattens them into three analytics-ready CSV outputs with timezone handling, type conversion, and table routing.",
+      techStack: ["Python", "JSON", "CSV", "ETL", "Pandas", "Timezone Handling"],
+      liveLink: "https://github.com/wilfex81/event-ingestion-pipeline",
+      longDescription:
+        "An event ingestion pipeline that reads nested JSON records from case.json, extracts the embedded payloads, and transforms them into structured outputs for analytics and SQL-friendly consumption.",
+      sections: [
+        {
+          title: "Project Overview",
+          paragraphs: [
+            "This project focuses on turning raw event payloads into clean tabular outputs. Each record is parsed twice because the Payload field arrives as a JSON-encoded string inside the outer JSON event record.",
+            "The pipeline routes records to the correct output table, flattens nested structures, and preserves the formatting rules required for downstream analytics.",
+          ],
+        },
+        {
+          title: "Transformation Logic",
+          bullets: [
+            "CuratedOffer_Result records are expanded so each option becomes its own row in CuratedOfferOptions.csv.",
+            "DynamicPrice_Result records are flattened so algorithmOutput fields become top-level columns in DynamicPriceRange.csv.",
+            "Timezone conversion shifts EnqueuedTimeUtc from UTC to UTC-3 before formatting the date as DD/MM/YYYY.",
+            "Boolean values are converted to numeric output so they remain compatible with CSV and SQL consumption.",
+          ],
+        },
+        {
+          title: "Output Tables",
+          bullets: [
+            "CuratedOfferOptions.csv: option-level curated offer data with pricing, scoring, and defeat reasons.",
+            "DynamicPriceOption.csv: provider, offer, option, and best-price output.",
+            "DynamicPriceRange.csv: provider-level pricing ranges with min and max recommendations.",
+          ],
+        },
+        {
+          title: "Implementation Notes",
+          bullets: [
+            "Python json.loads handles the nested payload decoding.",
+            "csv.QUOTE_NONNUMERIC keeps string values quoted while leaving numeric fields unquoted.",
+            "The pipeline is designed to be simple, repeatable, and easy to extend for future event types.",
+          ],
+        },
+        {
+          title: "Repository & Resources",
+          paragraphs: [
+            "GitHub: github.com/wilfex81/event-ingestion-pipeline",
+          ],
+        },
+      ],
+    },
+    {
       title: "E-commerce Data Pipeline",
       description:
         "End-to-end ETL pipeline processing 96K+ orders from raw CSV → PostgreSQL → dbt transformations → Airflow orchestration → Metabase analytics.",
