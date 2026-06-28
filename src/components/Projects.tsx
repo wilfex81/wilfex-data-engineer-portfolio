@@ -73,6 +73,7 @@ const Projects: React.FC = () => {
           bullets: [
             "Python json.loads handles the nested payload decoding.",
             "csv.QUOTE_NONNUMERIC keeps string values quoted while leaving numeric fields unquoted.",
+            "The project includes two loader implementations: one using Python's built-in csv module with DictWriter, and another using pandas with DataFrame.to_csv(); both produce identical output, but the pandas version is more concise and scales better when applying transformations at load time.",
             "The pipeline is designed to be simple, repeatable, and easy to extend for future event types.",
           ],
         },
