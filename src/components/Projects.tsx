@@ -41,16 +41,14 @@ const Projects: React.FC = () => {
         "Production-grade fintech pipeline that ingests raw JSON events, transforms them through Medallion layers, validates data quality, tracks history with SCD2 snapshots, and exposes Gold tables through a FastAPI service.",
       techStack: ["Python", "PostgreSQL", "dbt", "FastAPI", "Apache Airflow", "Pandas", "SQLAlchemy", "JSONB"],
       liveLink: "https://github.com/wilfex81/fintech-etl-pipeline/",
-      images: [
-        `${import.meta.env.BASE_URL}project-images/Database.png`,
-        `${import.meta.env.BASE_URL}project-images/overview.png`,
-        `${import.meta.env.BASE_URL}project-images/fintech_Airflow.png`,
-      ],
       longDescription:
         "A production-oriented data engineering project for a fintech scenario where a mobile app emits financial event data as JSON. The pipeline lands raw events in PostgreSQL, models them through Bronze, Silver, and Gold layers, applies dbt tests and snapshots, and serves curated results through a read-only REST API orchestrated by Apache Airflow.",
       sections: [
         {
           title: "Project Overview",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/Database.png`,
+          ],
           paragraphs: [
             "This project turns raw financial app events into analytics-ready tables with a clear Medallion Architecture. The Bronze layer keeps transactions.json immutable, the Silver layer flattens and standardizes nested JSON payloads, and the Gold layer exposes reusable marts for monthly spend, budget breaches, and account history.",
             "The design emphasizes reproducibility and trust: raw data is preserved, transformations are versioned in dbt, quality checks guard each run, and historical balance changes are captured with dbt snapshots for point-in-time analysis.",
@@ -67,6 +65,9 @@ const Projects: React.FC = () => {
         },
         {
           title: "Data Quality & History",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/overview.png`,
+          ],
           bullets: [
             "dbt tests enforce not-null and accepted-values rules across the staging layer.",
             "Nested metrics and arrays are flattened deterministically so analysts query stable columns instead of raw JSON.",
@@ -76,6 +77,9 @@ const Projects: React.FC = () => {
         },
         {
           title: "Orchestration & API",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/fintech_Airflow.png`,
+          ],
           bullets: [
             "Apache Airflow runs the pipeline daily in a strict order: load data, run dbt models, run dbt tests, then refresh the snapshot.",
             "If validation fails, the snapshot step is skipped so bad data does not overwrite historical truth.",
