@@ -36,6 +36,62 @@ const Projects: React.FC = () => {
 
   const projectsData: ProjectData[] = [
     {
+      title: "Fintech ETL Pipeline",
+      description:
+        "Production-grade fintech pipeline that ingests raw JSON events, transforms them through Medallion layers, validates data quality, tracks history with SCD2 snapshots, and exposes Gold tables through a FastAPI service.",
+      techStack: ["Python", "PostgreSQL", "dbt", "FastAPI", "Apache Airflow", "Pandas", "SQLAlchemy", "JSONB"],
+      liveLink: "https://github.com/wilfex81/fintech-etl-pipeline/",
+      images: [
+        `${import.meta.env.BASE_URL}project-images/Database.png`,
+        `${import.meta.env.BASE_URL}project-images/overview.png`,
+        `${import.meta.env.BASE_URL}project-images/fintech_Airflow.png`,
+      ],
+      longDescription:
+        "A production-oriented data engineering project for a fintech scenario where a mobile app emits financial event data as JSON. The pipeline lands raw events in PostgreSQL, models them through Bronze, Silver, and Gold layers, applies dbt tests and snapshots, and serves curated results through a read-only REST API orchestrated by Apache Airflow.",
+      sections: [
+        {
+          title: "Project Overview",
+          paragraphs: [
+            "This project turns raw financial app events into analytics-ready tables with a clear Medallion Architecture. The Bronze layer keeps transactions.json immutable, the Silver layer flattens and standardizes nested JSON payloads, and the Gold layer exposes reusable marts for monthly spend, budget breaches, and account history.",
+            "The design emphasizes reproducibility and trust: raw data is preserved, transformations are versioned in dbt, quality checks guard each run, and historical balance changes are captured with dbt snapshots for point-in-time analysis.",
+          ],
+        },
+        {
+          title: "Architecture",
+          bullets: [
+            "Bronze: transactions.json is ingested into PostgreSQL raw.events as JSONB without modification.",
+            "Silver: dbt staging models flatten transactions, account snapshots, and category spend into structured tables.",
+            "Gold: marts aggregate monthly spend and budget breaches, while account_balance_snapshot preserves SCD2 history.",
+            "Serving layer: FastAPI exposes read-only endpoints for spend, budget breaches, and account history.",
+          ],
+        },
+        {
+          title: "Data Quality & History",
+          bullets: [
+            "dbt tests enforce not-null and accepted-values rules across the staging layer.",
+            "Nested metrics and arrays are flattened deterministically so analysts query stable columns instead of raw JSON.",
+            "account_balance_snapshot uses dbt snapshots to track how balances change over time with dbt_valid_from and dbt_valid_to.",
+            "Timezone conversion standardizes event timestamps to Nairobi time for consistent downstream reporting.",
+          ],
+        },
+        {
+          title: "Orchestration & API",
+          bullets: [
+            "Apache Airflow runs the pipeline daily in a strict order: load data, run dbt models, run dbt tests, then refresh the snapshot.",
+            "If validation fails, the snapshot step is skipped so bad data does not overwrite historical truth.",
+            "FastAPI provides /spend/{account_id}, /budget-breaches/{account_id}, and /account-history/{account_id} endpoints over the Gold tables.",
+          ],
+        },
+        {
+          title: "Repository & Resources",
+          paragraphs: [
+            "GitHub: github.com/wilfex81/fintech-etl-pipeline/",
+          ],
+        },
+      ],
+      rating: 5,
+    },
+    {
       title: "Event Ingestion Pipeline",
       description:
         "ETL pipeline that parses JSON event payloads and flattens them into three analytics-ready CSV outputs with timezone handling, type conversion, and table routing.",
