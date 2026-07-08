@@ -10,9 +10,10 @@ import { toast } from 'sonner';
 const BlogPost: React.FC = () => {
   const { slug } = useParams();
   const post = slug ? getBlogPost(slug) : undefined;
+  const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 
   const handleShare = async () => {
-    const postUrl = window.location.href;
+    const postUrl = new URL(`blog/${slug ?? ''}`, new URL(baseUrl, window.location.origin)).toString();
 
     try {
       if (navigator.clipboard?.writeText) {
