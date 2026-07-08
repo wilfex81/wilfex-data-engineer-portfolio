@@ -1,8 +1,14 @@
 export type BlogSection = {
   title: string;
-  paragraphs: string[];
+  paragraphs?: string[];
+  bullets?: string[];
+  quote?: string;
   code?: string;
   note?: string;
+  table?: {
+    headers: string[];
+    rows: string[][];
+  };
 };
 
 export type BlogPost = {
@@ -20,54 +26,193 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'building-a-reliable-data-pipeline',
-    title: 'Building a Reliable Data Pipeline for Portfolio Work',
-    subtitle: 'How I structure raw ingestion, transformations, and checks so the final dataset stays trustworthy.',
-    excerpt:
-      'A practical walkthrough of how I turn raw records into clean analytics tables with clear staging layers, repeatable transformations, and validation gates.',
-    date: '6/20/2026',
-    readTime: '7 min read',
+    slug: 'data-structures-algorithms-for-data-engineers',
+    title: 'Data Structures & Algorithms for Data Engineers',
+    subtitle: 'From Python Fundamentals to Interview Mastery',
+    excerpt: 'Learn the essential data structures and algorithms that every data engineer should know.',
+    date: '1/1/2026',
+    readTime: '10 min read',
     author: 'Wilfex',
     authorIcon: 'user',
-    tags: ['Python', 'dbt', 'Airflow', 'PostgreSQL'],
+    tags: ['Data Structures', 'Algorithms', 'Python'],
     sections: [
       {
-        title: 'Why the pipeline exists',
+        title: 'Chapter 1: Thinking Like an Engineer',
+        quote: 'Programs are written for people to read, and only incidentally for machines to execute. - Harold Abelson',
         paragraphs: [
-          'Most portfolio projects fail because they look like scripts instead of systems. I wanted a pipeline that showed how raw events become something a team could actually trust and query.',
-          'That means preserving the source data, being explicit about transformations, and making it easy to rerun the whole flow without manual cleanup.',
+          'By the end of this chapter, you will understand why Data Structures and Algorithms exist, why engineering is different from programming, and why efficient software matters as data grows.',
+          'This book is written for engineers who want to understand how modern data systems work. Whether you are building APIs, designing ETL pipelines, optimizing SQL queries, or preparing for technical interviews, the underlying principles are the same.',
+          'The goal is not merely to solve algorithm puzzles. The goal is to think like the engineers who designed PostgreSQL, Spark, Kafka, Airflow, and countless other systems.',
+        ],
+        bullets: [
+          'Understand why Data Structures and Algorithms (DSA) exist.',
+          'Distinguish between programming and engineering.',
+          'Explain why efficient software matters.',
+          'Recognize the trade-offs between time, memory, and simplicity.',
+          'Develop the engineering mindset that underpins the rest of this book.',
+          'Appreciate how DSA influences databases, distributed systems, and data engineering tools.',
         ],
       },
       {
-        title: 'Layering the data',
+        title: 'Who This Book Is For',
         paragraphs: [
-          'The cleanest pattern for this kind of work is a simple raw-to-curated flow. Raw keeps the original payload. Staging handles type normalization and column cleanup. Marts give the business-friendly tables that the dashboards and reports need.',
-          'This makes each step smaller and easier to debug. If a metric changes, I know exactly which layer to inspect.',
+          'Most DSA books assume one of two audiences: complete beginners learning to program, or software engineers preparing for coding interviews. This book takes a different path.',
+          'It is written for engineers who want to understand how modern data systems work. The goal is not merely to solve algorithm puzzles. The goal is to think like the engineers who designed PostgreSQL, Spark, Kafka, Airflow, and countless other systems.',
         ],
-        code: `-- staging model example
-SELECT
-  customer_id,
-  CAST(order_total AS DECIMAL(10,2)) AS order_total,
-  DATE(order_date) AS order_date
-FROM raw_orders
-WHERE order_status = 'completed';`,
       },
       {
-        title: 'Protecting the output',
+        title: '1.1 Programming vs Engineering',
         paragraphs: [
-          'A pipeline is only useful if it fails in a predictable way. I like to add tests for missing values, uniqueness, and accepted values before the curated layer is published.',
-          'The rule is simple: if the data quality check fails, the output should stop rather than silently shipping bad numbers.',
+          'Many people use the terms programmer and software engineer interchangeably. While there is significant overlap, they represent different ways of approaching problems.',
+          'Imagine two people receive the same task: read a CSV file containing 10 million customer records and count how many customers belong to each country.',
+          'The programmer asks: "How can I make this work?" The engineer asks: How much memory will this require? How long will it take? Can this scale to 100 million records? What happens if the file does not fit into RAM? Can the work be parallelized? Is there a more efficient algorithm?',
+          'Both produce working software. Only one thinks about scalability before writing code.',
         ],
-        code: `# orchestration guard
-if not checks_passed:
-    raise RuntimeError('Data quality checks failed before publish')`,
-        note: 'This is the difference between a working demo and a system that survives production use.',
       },
       {
-        title: 'What I would improve next',
+        title: 'Engineering Is About Trade-offs',
         paragraphs: [
-          'If I kept extending the project, I would add better observability, richer tests around edge cases, and a small backfill strategy for late-arriving data.',
-          'Those are the details that make the architecture feel complete instead of just functional.',
+          'There is rarely a perfect solution. Instead, engineers balance competing concerns and choose the right compromise for the situation.',
+        ],
+        table: {
+          headers: ['Goal', 'Cost'],
+          rows: [
+            ['Faster execution', 'Often uses more memory'],
+            ['Lower memory usage', 'Often requires more CPU time'],
+            ['Simpler code', 'Sometimes less efficient'],
+            ['Highly optimized code', 'Often more complex to maintain'],
+          ],
+        },
+        note: 'Good engineering is the art of choosing the right compromise.',
+      },
+      {
+        title: '1.2 Why Data Structures Exist',
+        paragraphs: [
+          'Imagine owning a library containing one million books. A visitor asks, "Do you have Clean Code?" If every book is piled randomly on the floor, you may need to check each one. If the books are arranged alphabetically, you already know where to begin. If you have a digital catalog, the answer comes back in moments.',
+          'The books themselves never changed. Only how they were organized changed. That is precisely what a data structure is.',
+        ],
+        note: 'A data structure is a way of organizing data so that operations on that data become efficient.',
+        bullets: [
+          'Searching',
+          'Inserting',
+          'Updating',
+          'Deleting',
+          'Sorting',
+          'Traversing',
+        ],
+      },
+      {
+        title: '1.3 Why Algorithms Exist',
+        paragraphs: [
+          'Suppose someone gives you a phone book sorted alphabetically and asks you to find John Smith. One approach is to start at page one. Another is to open roughly in the middle, discard half the book, and repeat. That method is Binary Search.',
+          'The data did not change. The method changed. An algorithm is simply a procedure for solving a problem.',
+        ],
+        note: 'An algorithm is a finite sequence of well-defined steps used to solve a problem.',
+      },
+      {
+        title: '1.4 Why Efficient Software Matters',
+        paragraphs: [
+          'Many beginners assume modern computers are so powerful that efficiency no longer matters. Reality says otherwise. As data grows, slow algorithms become visible bottlenecks.',
+          'If your application searches a list of customers and each comparison takes approximately one microsecond, one thousand customers is fine, one million customers starts to hurt, and one billion customers can make the application feel broken.',
+          'This is why scalability matters. The algorithm did not become worse; the data became larger.',
+        ],
+      },
+      {
+        title: '1.5 The Cost of Poor Algorithms',
+        paragraphs: [
+          'Imagine two developers solving the same problem. Developer A compares every customer with every other customer. Developer B builds an index first. Both solutions work. Only one scales.',
+          'This is why companies care about DSA during interviews. They are not checking whether you have memorized puzzles. They are evaluating whether you can recognize when a solution will fail to scale.',
+        ],
+        table: {
+          headers: ['Number of Records', 'Quadratic Algorithm', 'Linear Algorithm'],
+          rows: [
+            ['100', '10,000 operations', '100 operations'],
+            ['1,000', '1,000,000 operations', '1,000 operations'],
+            ['10,000', '100,000,000 operations', '10,000 operations'],
+            ['1,000,000', '1,000,000,000,000 operations', '1,000,000 operations'],
+          ],
+        },
+      },
+      {
+        title: '1.6 The Three Resources Every Engineer Manages',
+        paragraphs: [
+          'Every program consumes three primary resources: time, memory, and complexity. Improving one often affects the others. For example, caching can reduce execution time but increase memory usage.',
+        ],
+        bullets: ['Time: how long does the program take?', 'Memory: how much RAM is required?', 'Complexity: how difficult is the code to understand and maintain?'],
+      },
+      {
+        title: '1.7 The Engineer\'s Mental Model',
+        paragraphs: [
+          'Before writing code, experienced engineers ask questions about the input, output, data size, frequency of operations, and which data structure best supports those operations. None of these questions involve syntax.',
+          'Programming languages change. Engineering principles endure.',
+        ],
+        bullets: [
+          'What is the input?',
+          'What is the output?',
+          'How large can the input become?',
+          'Which operations occur most frequently?',
+          'Which data structure best supports those operations?',
+          'Can I improve the algorithm?',
+          'What are the trade-offs?',
+        ],
+      },
+      {
+        title: '1.8 Why This Matters for Data Engineers',
+        paragraphs: [
+          'At first glance, DSA may seem unrelated to Data Engineering. In reality, nearly every major data platform is built on these concepts.',
+          'PostgreSQL uses B-Trees and hashing. Spark relies on graphs, queues, and sorting. Kafka uses queues, arrays, and hashing. Airflow uses directed acyclic graphs. Redis uses hash tables and skip lists. dbt uses dependency graphs.',
+          'As we progress through this book, you will see these connections repeatedly. The goal is not just to recognize a data structure. It is to understand why engineers chose it.',
+        ],
+        table: {
+          headers: ['Technology', 'Core DSA Concepts'],
+          rows: [
+            ['PostgreSQL', 'B-Trees, Hash Tables, Sorting'],
+            ['Spark', 'Graphs, Hash Maps, Sorting, Queues'],
+            ['Kafka', 'Queues, Arrays, Hashing'],
+            ['Airflow', 'Directed Acyclic Graphs'],
+            ['Redis', 'Hash Tables, Skip Lists'],
+            ['dbt', 'Dependency Graphs'],
+          ],
+        },
+      },
+      {
+        title: '1.9 A Different Way to Think About DSA',
+        paragraphs: [
+          'Instead of asking which data structure you should memorize, ask what operation you perform most often. If your application searches constantly, optimize searching. If it inserts frequently, optimize insertion. If it processes streaming events, choose a structure designed for sequential processing.',
+          'Data structures are tools. The problem determines which tool to use.',
+        ],
+        bullets: [
+          'If your application searches constantly, optimize searching.',
+          'If it inserts frequently, optimize insertion.',
+          'If it processes streaming events, choose a structure designed for sequential processing.',
+        ],
+      },
+      {
+        title: 'Chapter Summary',
+        paragraphs: [
+          'In this chapter, we established the foundation for the rest of the book. We learned that engineering is about making informed trade-offs rather than simply writing code that works. We introduced the distinction between data structures and algorithms, explored why efficiency becomes increasingly important as data grows, and connected these ideas to the systems used in modern Data Engineering.',
+          'The key lesson is that software engineering begins long before the first line of code is written. It begins by asking the right questions.',
+        ],
+      },
+      {
+        title: 'Key Takeaways',
+        bullets: [
+          'A data structure organizes data efficiently.',
+          'An algorithm is a procedure for solving a problem.',
+          'Engineering is about balancing trade-offs.',
+          'Scalability matters more than raw hardware speed.',
+          'Time, memory, and code complexity are the three primary resources to manage.',
+          'Modern data systems are built on DSA concepts.',
+        ],
+      },
+      {
+        title: 'Reflection Questions',
+        bullets: [
+          'Why is "working code" not always good code?',
+          'What trade-offs might you make when optimizing for speed?',
+          'Why do different applications require different data structures?',
+          'How could a poor algorithm affect a company serving millions of users?',
+          'Which systems you currently use (PostgreSQL, Airflow, Kafka, etc.) might rely on DSA internally?',
         ],
       },
     ],
