@@ -12,6 +12,7 @@ export type BlogSection = {
 };
 
 export type BlogPost = {
+  partTitle?: string;
   slug: string;
   title: string;
   subtitle: string;
@@ -27,6 +28,7 @@ export type BlogPost = {
 export const blogPosts: BlogPost[] = [
   {
     slug: 'data-structures-algorithms-for-data-engineers',
+    partTitle: 'Part I – Foundations', 
     title: 'Data Structures & Algorithms for Data Engineers',
     subtitle: 'From Python Fundamentals to Interview Mastery',
     excerpt: 'Learn the essential data structures and algorithms that every data engineer should know.',
