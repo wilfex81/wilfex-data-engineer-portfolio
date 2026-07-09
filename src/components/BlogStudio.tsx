@@ -17,7 +17,7 @@ const BlogStudio: React.FC = () => {
     }
 
     return blogPosts.filter((post) => {
-      const haystack = [post.title, post.subtitle, post.excerpt, post.author, post.tags.join(' '), post.date, post.readTime]
+      const haystack = [post.partTitle, post.title, post.subtitle, post.excerpt, post.author, post.tags.join(' '), post.date, post.readTime]
         .join(' ')
         .toLowerCase();
 
@@ -73,6 +73,12 @@ const BlogStudio: React.FC = () => {
                   <span>{post.date}</span>
                   <span>{post.readTime}</span>
                 </div>
+
+                {post.partTitle ? (
+                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 group-hover:text-slate-700 transition-colors line-clamp-2">
+                    {post.partTitle}
+                  </p>
+                ) : null}
 
                 <h2 className="mt-5 text-xl font-semibold tracking-tight text-slate-950 group-hover:text-slate-700 transition-colors line-clamp-2">
                   {post.title}
