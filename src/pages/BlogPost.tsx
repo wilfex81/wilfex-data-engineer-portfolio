@@ -76,11 +76,11 @@ const BlogPost: React.FC = () => {
 
             <p className="text-base md:text-lg text-slate-600 leading-relaxed max-w-3xl">{post.subtitle}</p>
             
-            {post.partTitle ? (
+            {/* {post.partTitle ? (
               <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-500">
                 {post.partTitle}
               </p>
-            ) : null}
+            ) : null} */}
 
             <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 pt-2">
               <span className="inline-flex items-center gap-2">
