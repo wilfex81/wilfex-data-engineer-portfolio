@@ -447,11 +447,6 @@ export const blogPosts: BlogPost[] = [
         ],
         bullets: [
           'Understand why Data Structures and Algorithms (DSA) exist.',
-          'Distinguish between programming and engineering.',
-          'Explain why efficient software matters.',
-          'Recognize the trade-offs between time, memory, and simplicity.',
-          'Develop the engineering mindset that underpins the rest of this book.',
-          'Appreciate how DSA influences databases, distributed systems, and data engineering tools.',
         ],
       },
       {
@@ -465,9 +460,6 @@ export const blogPosts: BlogPost[] = [
         title: '1.1 Programming vs Engineering',
         paragraphs: [
           'Many people use the terms programmer and software engineer interchangeably. While there is significant overlap, they represent different ways of approaching problems.',
-          'Imagine two people receive the same task: read a CSV file containing 10 million customer records and count how many customers belong to each country.',
-          'The programmer asks: "How can I make this work?" The engineer asks: How much memory will this require? How long will it take? Can this scale to 100 million records? What happens if the file does not fit into RAM? Can the work be parallelized? Is there a more efficient algorithm?',
-          'Both produce working software. Only one thinks about scalability before writing code.',
         ],
       },
       {
