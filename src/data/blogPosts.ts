@@ -439,14 +439,259 @@ export const blogPosts: BlogPost[] = [
     sections: [
       {
         title: 'Chapter 4: Arrays – The Foundation of Efficient Computing',
-        quote: 'Programs are written for people to read, and only incidentally for machines to execute. - Harold Abelson',
+        quote: 'Every abstraction in computer science eventually rests on how bytes are arranged in memory.',
         paragraphs: [
-          'By the end of this chapter, you will understand why Data Structures and Algorithms exist, why engineering is different from programming, and why efficient software matters as data grows.',
-          'This book is written for engineers who want to understand how modern data systems work. Whether you are building APIs, designing ETL pipelines, optimizing SQL queries, or preparing for technical interviews, the underlying principles are the same.',
-          'The goal is not merely to solve algorithm puzzles. The goal is to think like the engineers who designed PostgreSQL, Spark, Kafka, Airflow, and countless other systems.',
+          'By the end of this chapter, you will be able to explain what an array is, understand how arrays are stored in memory, distinguish between static arrays and dynamic arrays, analyze the time complexity of common array operations, understand why Python\'s list behaves like a dynamic array, recognize when arrays are the right and wrong choice, and connect arrays to databases, analytics engines, and modern data systems.',
         ],
         bullets: [
-          'Understand why Data Structures and Algorithms (DSA) exist.',
+          'Explain what an array is and why it exists.',
+          'Understand how arrays are stored in memory.',
+          'Distinguish between static arrays and dynamic arrays.',
+          'Analyze the time complexity of common array operations.',
+          'Understand why Python\'s list behaves like a dynamic array.',
+          'Recognize when arrays are the right and wrong choice.',
+          'Connect arrays to databases, analytics engines, and modern data systems.',
+        ],
+      },
+      {
+        title: '4.1 Why Arrays Exist',
+        paragraphs: [
+          'Imagine you\'re managing a warehouse with one million storage boxes. Every morning, workers receive requests like: retrieve box #582,314. If the boxes are scattered randomly, a worker must search aisle after aisle until the correct box is found. Even with a good inventory system, physically retrieving the box would be slow.',
+          'A better approach is to arrange every box in order. If you know where Box 1 is stored, you can calculate the location of Box 582,314 without checking any of the others. That is the core idea behind an array.',
+          'An array stores elements next to one another in memory, allowing the computer to calculate the address of any element directly.',
+        ],
+      },
+      {
+        title: 'Engineering Insight',
+        paragraphs: [
+          'An array is not fast because computers are powerful. It is fast because its layout in memory makes finding data almost trivial.',
+        ],
+      },
+      {
+        title: '4.2 What Is an Array?',
+        paragraphs: [
+          'An array is a collection of elements stored in contiguous memory locations, where each element can be accessed using an index.',
+          'Three ideas are important: the elements are stored together, every element occupies a predictable amount of memory, and the location of each element can be calculated.',
+        ],
+        code: `Index
+
+0     1     2     3     4
+
++-----+-----+-----+-----+-----+
+| 17  | 23  | 91  | 14  |  8  |
++-----+-----+-----+-----+-----+
+
+numbers[2] -> 91`,
+      },
+      {
+        title: '4.3 Memory: The Hidden Story',
+        paragraphs: [
+          'Many programmers think numbers = [17, 23, 91, 14, 8] creates a list. Internally, much more is happening. Imagine memory as a long street of numbered houses.',
+          'Suppose each integer occupies four bytes. Memory looks like this: Address 1000 holds 17, address 1004 holds 23, address 1008 holds 91, address 1012 holds 14, and address 1016 holds 8. Notice the pattern: each element is exactly four bytes away from the previous one.',
+          'This predictability allows the CPU to compute the address mathematically instead of searching.',
+        ],
+        code: `Address     Value
+
+1000        17
+1004        23
+1008        91
+1012        14
+1016        8`,
+      },
+      {
+        title: 'Address Calculation',
+        paragraphs: [
+          'Suppose the base address is 1000 and each element occupies 4 bytes. To find index 3, the CPU calculates 1000 + (3 x 4) = 1012. No searching. No iteration. Only arithmetic.',
+          'That is why indexing is so efficient.',
+        ],
+        code: `Base address: 1000
+Element size: 4 bytes
+
+1000 + (3 x 4)
+
+=
+
+1012`,
+      },
+      {
+        title: 'Complexity',
+        paragraphs: [
+          'Access by index, such as numbers[3], is O(1). Regardless of whether the array contains 10 elements, 10,000 elements, or 10 million elements, the calculation is essentially the same.',
+        ],
+      },
+      {
+        title: 'Engineering Insight',
+        paragraphs: [
+          'This simple property explains why arrays underpin so much of computing. Direct indexing is one of the cheapest operations a processor can perform.',
+        ],
+      },
+      {
+        title: '4.4 Static vs Dynamic Arrays',
+        paragraphs: [
+          'Not all arrays behave the same.',
+        ],
+      },
+      {
+        title: 'Static Arrays',
+        paragraphs: [
+          'A static array has a fixed size. If you allocate space for 100 elements, you cannot store 101 elements without creating an entirely new array.',
+          'Languages like C support static arrays directly.',
+        ],
+        bullets: [
+          'Advantages: very fast and predictable memory usage.',
+          'Disadvantages: the size cannot change.',
+        ],
+      },
+      {
+        title: 'Dynamic Arrays',
+        paragraphs: [
+          'Most modern languages use dynamic arrays. Python\'s list, Java\'s ArrayList, C++\'s vector, and JavaScript arrays automatically resize when necessary.',
+          'To the programmer, numbers.append(42) looks effortless. Internally, however, resizing can be expensive.',
+        ],
+      },
+      {
+        title: '4.5 How Dynamic Arrays Grow',
+        paragraphs: [
+          'Suppose an array currently has capacity for four elements. Now we append 50, but there is no room. The runtime typically allocates a larger block of memory, copies every existing element, appends the new value, and releases the old memory.',
+        ],
+        code: `Capacity = 4
+
++----+----+----+----+
+| 10 | 20 | 30 | 40 |
++----+----+----+----+
+
+numbers.append(50)
+
+Capacity = 8
+
++----+----+----+----+----+----+----+----+
+|10  |20  |30  |40  |50  |    |    |    |
++----+----+----+----+----+----+----+----+`,
+      },
+      {
+        title: 'Does That Mean append() Is Slow?',
+        paragraphs: [
+          'Not usually. Most appends simply place the new value into unused space. Only occasionally does resizing occur. Because resizing is infrequent, the average cost of append() remains constant.',
+          'This is known as amortized O(1) time. We\'ll revisit amortized analysis later in the book.',
+        ],
+      },
+      {
+        title: '4.6 Common Array Operations',
+        table: {
+          headers: ['Operation', 'Time Complexity'],
+          rows: [
+            ['Access by index', 'O(1)'],
+            ['Update by index', 'O(1)'],
+            ['Append (dynamic array)', 'Amortized O(1)'],
+            ['Search (unsorted)', 'O(n)'],
+            ['Insert at beginning', 'O(n)'],
+            ['Delete at beginning', 'O(n)'],
+            ['Insert in middle', 'O(n)'],
+            ['Delete in middle', 'O(n)'],
+          ],
+        },
+      },
+      {
+        title: 'Engineering Insight',
+        paragraphs: [
+          'Insertion and deletion are expensive because elements must shift to keep memory contiguous. If you insert 15 at index 1 in 10 20 30 40, then 20, 30, and 40 all move one position.',
+        ],
+      },
+      {
+        title: '4.7 Arrays and CPU Caches',
+        paragraphs: [
+          'This is one of the biggest reasons arrays perform so well. Modern CPUs use small, extremely fast memories called caches. When a CPU loads one element from memory, it often loads several neighboring elements at the same time.',
+          'Because arrays store data contiguously, the next few elements are likely already in the cache. This improves performance dramatically. Linked lists, which we\'ll study later, do not benefit from this property because their nodes may be scattered throughout memory.',
+          'This concept is called cache locality, and it is a major reason arrays outperform linked lists in many real-world applications, even when theoretical complexity appears similar.',
+        ],
+      },
+      {
+        title: '4.8 Arrays in Data Engineering',
+        paragraphs: [
+          'Arrays appear everywhere. PostgreSQL stores rows contiguously on disk, improving sequential reads. Apache Arrow stores columns in contiguous memory buffers, enabling high-performance analytics and vectorized execution. NumPy arrays are contiguous blocks of memory containing values of the same type, allowing highly optimized numerical computation. Pandas columns are backed by array-like structures, making column-wise operations efficient. Spark partitions data into contiguous structures that can be processed efficiently across a cluster.',
+          'The principle is the same: keep related data together to maximize throughput.',
+        ],
+      },
+      {
+        title: 'Engineering Insight',
+        paragraphs: [
+          'When people say that Pandas or NumPy are fast, they are not just referring to Python. They are referring to careful memory layout, vectorized operations, and minimizing unnecessary work, all concepts rooted in arrays.',
+        ],
+      },
+      {
+        title: '4.9 When Should You Use an Array?',
+        paragraphs: [
+          'Arrays are an excellent choice when fast random access is required, data is mostly read rather than modified, cache performance matters, and the number of insertions and deletions is relatively small.',
+          'Avoid arrays when frequent insertions occur at the beginning, frequent deletions occur in the middle, or elements constantly change position. In those cases, another data structure such as a linked list may be more appropriate.',
+        ],
+        bullets: [
+          'Fast random access is required.',
+          'Data is mostly read rather than modified.',
+          'Cache performance matters.',
+          'The number of insertions and deletions is relatively small.',
+        ],
+      },
+      {
+        title: 'Common Interview Patterns',
+        paragraphs: [
+          'Arrays are the foundation for many algorithmic techniques. Throughout this book, you will encounter Two Pointers, Sliding Window, Prefix Sum, Binary Search on sorted arrays, Kadane\'s Algorithm, and Merge Intervals.',
+          'Mastering arrays will make these patterns much easier to understand.',
+        ],
+        bullets: [
+          'Two Pointers',
+          'Sliding Window',
+          'Prefix Sum',
+          'Binary Search (on sorted arrays)',
+          'Kadane\'s Algorithm',
+          'Merge Intervals',
+        ],
+      },
+      {
+        title: 'Mini Project',
+        paragraphs: [
+          'Imagine you\'re building a simple analytics tool. Given a list of daily website visits, your tasks are to find the total visits, compute the average, find the busiest day, and identify the day with the lowest traffic. Later in the book, you\'ll revisit this project using more advanced data structures and algorithms to compare performance and design choices.',
+        ],
+        code: `visits = [120, 145, 133, 160, 155, 170, 180]
+
+1. Find the total visits.
+2. Compute the average.
+3. Find the busiest day.
+4. Identify the day with the lowest traffic.`,
+      },
+      {
+        title: 'Chapter Summary',
+        paragraphs: [
+          'Arrays are one of the most fundamental data structures in computer science because they organize data in contiguous memory, enabling direct access to any element in constant time.',
+          'This simple design has profound consequences. Arrays underpin programming languages, databases, analytics engines, and scientific computing libraries. Understanding how they work in memory provides intuition that will carry through the rest of this book.',
+        ],
+      },
+      {
+        title: 'Key Takeaways',
+        bullets: [
+          'Arrays store elements contiguously in memory.',
+          'Direct indexing is possible because addresses can be calculated.',
+          'Access by index is O(1).',
+          'Searching an unsorted array is O(n).',
+          'Insertions and deletions in the middle require shifting elements.',
+          'Dynamic arrays trade occasional resizing for convenient growth.',
+          'Cache locality is one of the primary reasons arrays perform well.',
+          'Many data engineering tools are built on array-based storage.',
+        ],
+      },
+      {
+        title: 'Reflection Questions',
+        bullets: [
+          'Why is indexing into an array considered O(1)?',
+          'What happens internally when a dynamic array runs out of capacity?',
+          'Why can arrays outperform linked lists in practice despite similar theoretical complexities for some operations?',
+          'How does contiguous memory benefit CPU caches?',
+          'Which of the data engineering tools you use rely on array-like storage, and why?',
+        ],
+      },
+      {
+        title: 'Preview of Chapter 5',
+        paragraphs: [
+          'In the next chapter, we\'ll build on arrays by exploring Strings. Although strings often look like simple text, they are specialized sequences with unique properties, performance characteristics, and algorithmic patterns. You\'ll learn why string processing is fundamental to databases, search engines, log analysis, and natural language applications, and why mastering strings is essential for both interviews and production systems.',
         ],
       },
       {
