@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import ProjectCard from "./ProjectCard";
-import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ProjectData {
@@ -28,13 +27,106 @@ interface ProjectData {
 }
 
 const Projects: React.FC = () => {
-  const [visibleProjects, setVisibleProjects] = useState(3);
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
   const projectsData: ProjectData[] = [
+    {
+      title: "Lakehouse Data Warehouse",
+      description:
+        "Cloud-native rebuild of a classic SQL Server data warehouse tutorial using AWS S3, Databricks Auto Loader, Delta Lake, Unity Catalog, dbt, Airflow, and Terraform.",
+      techStack: ["AWS S3", "Databricks", "Delta Lake", "Unity Catalog", "dbt", "Apache Airflow", "Terraform", "PySpark"],
+      liveLink: "https://github.com/wilfex81/data-warehouse-project",
+      images: [
+        `${import.meta.env.BASE_URL}project-images/architecture_diagram.png`,
+        `${import.meta.env.BASE_URL}project-images/databricks_job_runs.png`,
+        `${import.meta.env.BASE_URL}project-images/airflow_dag_trigger.png`,
+        `${import.meta.env.BASE_URL}project-images/pipeline_timeline.png`,
+      ],
+      longDescription:
+        "A modern medallion lakehouse rebuild of a classic SQL Server data warehouse tutorial, keeping the same CRM and ERP source data but replacing stored procedures with a governed, environment-promotable stack.",
+      sections: [
+        {
+          title: "Project Overview",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/architecture_diagram.png`,
+          ],
+          paragraphs: [
+            "This project rebuilds the original raw → bronze → silver → gold tutorial as a cloud-native lakehouse instead of a single SQL Server instance. Source CSVs land in S3, Databricks Auto Loader ingests them into Bronze Delta tables, dbt transforms the data into Silver and Gold layers, and Airflow triggers the Databricks job end-to-end.",
+            "The goal was not to change the business problem, but to modernize the platform: preserve the same CRM + ERP source data and medallion concept while showing how a production-oriented data platform is actually assembled today.",
+          ],
+        },
+        {
+          title: "Architecture",
+          bullets: [
+            "Storage: S3 raw/ for untouched source CSVs, with managed Delta storage for bronze, silver, and gold layers.",
+            "Ingestion: Databricks Auto Loader runs in availableNow batch mode to process new files idempotently.",
+            "Transformation: dbt-databricks models clean, conform, and publish the medallion layers directly in Unity Catalog.",
+            "Governance: Unity Catalog centralizes catalog, schema, location, and grant management.",
+            "Orchestration: Airflow triggers the Databricks Job through the Jobs API so scheduling stays outside the workspace.",
+          ],
+        },
+        {
+          title: "Pipeline Stages",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/databricks_job_runs.png`,
+          ],
+          bullets: [
+            "bronze_ingestion reads the six CRM and ERP CSV files into Bronze Delta tables with ingestion metadata.",
+            "dbt_run transforms the Bronze tables into Silver and Gold layers, including the final star schema.",
+            "dbt_test validates the models before the pipeline is considered complete.",
+            "The job is chained so downstream steps only run after upstream success, which keeps the pipeline deterministic.",
+          ],
+        },
+        {
+          title: "Evidence It Runs",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/airflow_dag_trigger.png`,
+            `${import.meta.env.BASE_URL}project-images/pipeline_timeline.png`,
+          ],
+          paragraphs: [
+            "The screenshots show the Databricks job run history, the Airflow DAG triggering the job externally, and the task-level timeline for a successful end-to-end execution.",
+            "That sequence matters because it proves the platform is not just documented architecture - it is a working pipeline with orchestration, compute, and warehouse logic all connected.",
+          ],
+        },
+        {
+          title: "Gold Layer",
+          bullets: [
+            "dim_customers uses CRM as the identity source of truth and enriches customers with ERP birthdate and country data.",
+            "dim_products keeps the current product version and joins category information from the ERP side.",
+            "fct_sales stores one row per order line and joins to both dimensions through surrogate keys.",
+            "The final output mirrors a classic star schema while staying fully managed inside the lakehouse stack.",
+          ],
+        },
+        {
+          title: "Notable Decisions",
+          bullets: [
+            "Serverless compute was used because the workspace tier depends on it, which changes how Databricks jobs and dbt tasks are configured.",
+            "Databricks Asset Bundles handle dev, staging, and prod promotion without hardcoded environment-specific edits.",
+            "Terraform provisions the AWS and Unity Catalog side of the platform so the infrastructure remains reproducible.",
+            "The dbt schema naming macro was overridden so medallion layers map cleanly to the intended Unity Catalog schemas.",
+          ],
+        },
+        {
+          title: "Source Data",
+          bullets: [
+            "CRM: cust_info.csv, prd_info.csv, sales_details.csv",
+            "ERP: CUST_AZ12.csv, LOC_A101.csv, PX_CAT_G1V2.csv",
+            "Same source dataset as the original tutorial, but rebuilt on a modern governed lakehouse foundation.",
+          ],
+        },
+        {
+          title: "Repository & Resources",
+          paragraphs: [
+            "GitHub: github.com/wilfex81/data-warehouse-project",
+            "Architecture notes: docs/architecture.md",
+          ],
+        },
+      ],
+      rating: 5,
+    },
     {
       title: "Fintech ETL Pipeline",
       description:
@@ -299,11 +391,6 @@ const Projects: React.FC = () => {
 
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const handleViewMore = () => {
-    // Show 6 more projects when the button is clicked
-    setVisibleProjects((prev) => Math.min(prev + 6, projectsData.length));
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -328,7 +415,7 @@ const Projects: React.FC = () => {
           ref={ref}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {projectsData.slice(0, visibleProjects).map((project, index) => (
+          {projectsData.map((project, index) => (
             <div
               key={project.title}
               className={cn(
@@ -352,18 +439,6 @@ const Projects: React.FC = () => {
             </div>
           ))}
         </div>
-
-        {visibleProjects < projectsData.length && (
-          <div className="mt-16 text-center">
-            <button
-              className="inline-flex items-center gap-2 px-6 py-3 border border-primary transition-all hover:bg-primary hover:text-primary-foreground"
-              onClick={handleViewMore}
-            >
-              View More
-              <ChevronDown size={16} />
-            </button>
-          </div>
-        )}
       </div>
     </section>
   );
