@@ -1,10 +1,10 @@
 # Wilfex Kipchirchir - Data Engineer Portfolio
 
-This repository contains a portfolio site built to showcase data analysis work, project case studies, and professional background. The site is focused on turning raw data into clear business insight through Excel dashboards, SQL analysis, visual storytelling, and practical decision support.
+This repository contains a portfolio website showcasing my Data Engineering projects, technical skills, and professional experience. The site highlights end-to-end data engineering work, including data ingestion, ETL and ELT pipelines, data modeling, workflow orchestration, cloud infrastructure, and scalable data platforms built with modern tools.
 
 ## What’s Inside
 
-- A polished landing page with a data-analysis-focused hero section
+- A polished landing page with a data-engineering-focused hero section
 - An About section with technical skills and work experience
 - A project gallery featuring three detailed case studies
 - Scrollable project modals with images, findings, process notes, and recommendations
@@ -12,9 +12,10 @@ This repository contains a portfolio site built to showcase data analysis work, 
 
 ## Featured Projects
 
-- Customer Churn Analysis - Excel dashboard and retention analysis highlighting churn drivers, contract type impact, and business recommendations
-- Exploratory Data Analysis - SQL-based layoffs analysis with data cleaning, pattern discovery, and structured findings
-- Retail Sales Performance Analysis - Excel dashboard covering sales, profit, region performance, and operational insights
+- Lakehouse Data Warehouse - AWS S3, Databricks, dbt, Airflow, and Terraform project built around a governed medallion architecture
+- Fintech ETL Pipeline - Production-oriented pipeline that ingests raw JSON events, applies Bronze/Silver/Gold modeling, and serves curated data through an API
+- Event Ingestion Pipeline - JSON-to-tabular ingestion workflow that flattens nested payloads into analytics-ready CSV outputs
+- E-commerce Data Pipeline - End-to-end data pipeline covering ingestion, transformation, orchestration, and dashboarding for transaction data
 
 ## Tech Stack
 
