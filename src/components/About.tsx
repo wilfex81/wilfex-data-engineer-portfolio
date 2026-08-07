@@ -31,14 +31,14 @@ const About: React.FC = () => {
   
   const experiences = [
     {
-      role: "Co-founder & Team Lead / Software Developer",
+      role: "Software Engineer | Team Lead | Co-founder",
       company: "SongaBiz Holdings, Nairobi, KE",
       period: "May 2024 – Jan 2026",
       description:
         "Built data-intensive backend systems and APIs with Python/Django, managed PostgreSQL data models and query performance, and delivered cloud-ready analytics workflows on AWS with cross-functional teams."
     },
     {
-      role: "Team Lead / Software Developer",
+      role: "Software Engineer | Team Lead",
       company: "Dowell Research, Singapore (Remote)",
       period: "Jun 2022 – May 2024",
       description:
