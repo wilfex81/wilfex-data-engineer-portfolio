@@ -39,11 +39,18 @@ const Projects: React.FC = () => {
         "Financial management system for Mexican SMEs built as a dual data engineering and software engineering portfolio project, combining a medallion pipeline with a Django REST API and a versioned tax compliance engine.",
       techStack: ["Django", "Django REST Framework", "dbt", "Airflow", "PostgreSQL", "Prophet", "scikit-learn", "Python"],
       liveLink: "https://github.com/wilfex81/APEXsYNC",
+      images: [
+        "https://raw.githubusercontent.com/wilfex81/APEXsYNC/main/docs/assets/architecture.svg",
+        "https://raw.githubusercontent.com/wilfex81/APEXsYNC/main/docs/assets/api_docs.png",
+      ],
       longDescription:
         "A dual-track portfolio project that combines a medallion-architecture data pipeline with a practical financial management API for Mexican SMEs. It processes synthetic CFDI/CFE-style data through ingestion, Bronze, Silver, and Gold layers while exposing analytics, normalization, and dynamic tax compliance via Django REST Framework.",
       sections: [
         {
           title: "Project Overview",
+          images: [
+            "https://raw.githubusercontent.com/wilfex81/APEXsYNC/main/docs/assets/architecture.svg",
+          ],
           paragraphs: [
             "APEXSYNC is designed around a simple but important idea: build a portfolio project that demonstrates both data engineering and software engineering without relying on a traditional ERP stack. The system ingests a raw synthetic financial feed, transforms it with dbt, orchestrates the pipeline with Airflow, and exposes business-facing analytics through a DRF API.",
             "The project deliberately avoids the complexity of monolithic ERPs. Tax rules are versioned data, not code, and the analytics and normalization modules read only from tested, documented data marts rather than raw transaction tables.",
