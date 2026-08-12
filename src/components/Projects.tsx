@@ -34,6 +34,79 @@ const Projects: React.FC = () => {
 
   const projectsData: ProjectData[] = [
     {
+      title: "APEXSYNC",
+      description:
+        "Financial management system for Mexican SMEs built as a dual data engineering and software engineering portfolio project, combining a medallion pipeline with a Django REST API and a versioned tax compliance engine.",
+      techStack: ["Django", "Django REST Framework", "dbt", "Airflow", "PostgreSQL", "Prophet", "scikit-learn", "Python"],
+      liveLink: "https://github.com/wilfex81/APEXsYNC",
+      longDescription:
+        "A dual-track portfolio project that combines a medallion-architecture data pipeline with a practical financial management API for Mexican SMEs. It processes synthetic CFDI/CFE-style data through ingestion, Bronze, Silver, and Gold layers while exposing analytics, normalization, and dynamic tax compliance via Django REST Framework.",
+      sections: [
+        {
+          title: "Project Overview",
+          paragraphs: [
+            "APEXSYNC is designed around a simple but important idea: build a portfolio project that demonstrates both data engineering and software engineering without relying on a traditional ERP stack. The system ingests a raw synthetic financial feed, transforms it with dbt, orchestrates the pipeline with Airflow, and exposes business-facing analytics through a DRF API.",
+            "The project deliberately avoids the complexity of monolithic ERPs. Tax rules are versioned data, not code, and the analytics and normalization modules read only from tested, documented data marts rather than raw transaction tables.",
+          ],
+        },
+        {
+          title: "Architecture",
+          bullets: [
+            "Synthetic CFDI/CFE-style feed lands in Django-managed Bronze tables as the raw ingestion layer.",
+            "dbt transforms the data through Silver (typed, deduped, cleaned) and Gold (aggregated marts for operations and analytics).",
+            "Airflow orchestrates daily ingestion and transformation, while a separate monthly tax update DAG handles rule publication with a human approval gate.",
+            "Three engine modules - tax, analytics, and normalization - all read from validated downstream layers and converge into one DRF API surface.",
+          ],
+        },
+        {
+          title: "Why This Project Exists",
+          bullets: [
+            "Predictive analytics: forecast cash flow and detect anomalies using Prophet and isolation-forest models on Gold-layer data.",
+            "Data normalization: identify duplicates, cost spikes, and profitability signals as versioned SQL transformations rather than ad hoc Python logic.",
+            "Dynamic tax compliance: calculate IVA and ISR based on versioned active rule sets that can be published without code redeployments.",
+            "This is the architectural core of the project: tax logic is data, not application code, and the system resolves the active rule set by date.",
+          ],
+        },
+        {
+          title: "Design Decisions",
+          bullets: [
+            "Tax rules live as versioned records in a draft → active → superseded lifecycle, with a single active rule set resolved at runtime.",
+            "Rule updates require a human approval step before publication, reflecting the real-world constraints of SHCP and Gaceta Oficial updates.",
+            "Analytics never reads raw transactions; it reads Gold marts, which are deduped, typed, and covered by dbt tests.",
+            "Airflow and the Django/dbt stack are intentionally separated into distinct virtual environments to avoid dependency conflicts between Airflow and dbt-core.",
+            "Synthetic data is structurally realistic but fabricated, allowing the repo to model real tax and operational edge cases without exposing any real entities or financial records.",
+          ],
+        },
+        {
+          title: "Data Engineering vs Software Engineering",
+          bullets: [
+            "Data engineering: synthetic data generation, Bronze/Silver/Gold medallion pipeline, dbt models and tests, Airflow orchestration, DAGs for daily pipeline and monthly tax rule updates.",
+            "Software engineering: Django and DRF API, tax engine, analytics service, normalization service, OpenAPI docs and auth flow.",
+            "The project was intentionally built so each half can stand on its own while still sharing the same underlying data contract.",
+          ],
+        },
+        {
+          title: "API Endpoints",
+          bullets: [
+            "POST /api/tax/calculate/ - calculate IVA/ISR against the active rule set",
+            "GET/POST /api/tax/rule-sets/ - list rule sets or create a draft",
+            "POST /api/tax/rule-sets/{id}/publish/ - activate a draft rule set",
+            "POST /api/analytics/forecast/ - generate a 6-month cash flow forecast",
+            "POST /api/analytics/anomalies/ - detect anomaly flags in cash flow and inventory runs",
+            "GET /api/normalization/review/ - review duplicate and cost-spike findings",
+          ],
+        },
+        {
+          title: "Repository & Resources",
+          paragraphs: [
+            "GitHub: github.com/wilfex81/APEXsYNC",
+            "The project combines a real-world data platform pattern with a focused, realistic business problem: dynamic tax compliance for Mexican SMEs.",
+          ],
+        },
+      ],
+      rating: 5,
+    },
+    {
       title: "Lakehouse Data Warehouse",
       description:
         "Cloud-native rebuild of a classic SQL Server data warehouse tutorial using AWS S3, Databricks Auto Loader, Delta Lake, Unity Catalog, dbt, Airflow, and Terraform.",
