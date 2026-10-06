@@ -1,14 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { cn } from '../lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from 'next-themes';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,6 +59,10 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <header
       className={cn(
@@ -88,17 +94,39 @@ const Navbar: React.FC = () => {
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="text-foreground/70 transition-all hover:text-foreground hover:bg-secondary/50 p-2 rounded-md"
+                aria-label={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
+                title={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
+              >
+                {resolvedTheme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+            </li>
           </ul>
         </nav>
 
         {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden z-50 text-foreground" 
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="md:hidden z-50 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="text-foreground p-2 rounded-md"
+            aria-label={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {resolvedTheme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <button 
+            className="text-foreground p-2" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (

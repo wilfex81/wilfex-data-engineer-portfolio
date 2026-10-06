@@ -39,11 +39,11 @@ const BlogPost: React.FC = () => {
       <MainLayout>
         <section className="py-28">
           <div className="container mx-auto container-padding max-w-3xl">
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-muted-foreground">
               <Link to="/blog">Back to all posts</Link>
             </p>
-            <h1 className="mt-6 text-4xl font-bold text-slate-950">Post not found</h1>
-            <p className="mt-4 text-slate-600">The post you asked for does not exist.</p>
+            <h1 className="mt-6 text-4xl font-bold text-foreground">Post not found</h1>
+            <p className="mt-4 text-muted-foreground">The post you asked for does not exist.</p>
           </div>
         </section>
       </MainLayout>
@@ -52,14 +52,14 @@ const BlogPost: React.FC = () => {
 
   return (
     <MainLayout>
-      <article className="py-16 md:py-20 bg-white">
+      <article className="py-16 md:py-20 bg-background">
         <div className="container mx-auto container-padding max-w-4xl">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-950 transition-colors">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="h-4 w-4" />
             Back to all posts
           </Link>
 
-          <div className="mt-8 space-y-5 border-b border-slate-200 pb-10">
+          <div className="mt-8 space-y-5 border-b border-border pb-10">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
                 <Badge key={tag} variant="secondary" className="rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
@@ -68,21 +68,21 @@ const BlogPost: React.FC = () => {
               ))}
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-950 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-foreground leading-tight">
               {post.title}
             </h1>
 
           
 
-            <p className="text-base md:text-lg text-slate-600 leading-relaxed max-w-3xl">{post.subtitle}</p>
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">{post.subtitle}</p>
             
             {/* {post.partTitle ? (
-              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-muted-foreground">
                 {post.partTitle}
               </p>
             ) : null} */}
 
-            <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 pt-2">
+            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground pt-2">
               <span className="inline-flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 {post.date}
@@ -98,27 +98,27 @@ const BlogPost: React.FC = () => {
             </div>
           </div>
 
-          <Card className="mt-10 border-slate-200 shadow-none">
+          <Card className="mt-10 border-border shadow-none">
             <CardContent className="p-6 md:p-10">
               <div className="space-y-10 max-w-none">
                 {post.sections.map((section) => (
                   <section key={section.title} className="space-y-4">
-                    <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-slate-950">{section.title}</h2>
+                    <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-foreground">{section.title}</h2>
 
                     {section.quote ? (
-                      <blockquote className="border-l-4 border-slate-200 pl-4 py-1 text-base md:text-lg italic text-slate-600">
+                      <blockquote className="border-l-4 border-border pl-4 py-1 text-base md:text-lg italic text-muted-foreground">
                         {section.quote}
                       </blockquote>
                     ) : null}
 
                     {section.paragraphs?.map((paragraph) => (
-                      <p key={paragraph} className="text-base leading-8 text-slate-700">
+                      <p key={paragraph} className="text-base leading-8 text-foreground/90">
                         {paragraph}
                       </p>
                     ))}
 
                     {section.bullets ? (
-                      <ul className="list-disc space-y-3 pl-6 text-base leading-8 text-slate-700">
+                      <ul className="list-disc space-y-3 pl-6 text-foreground/90">
                         {section.bullets.map((bullet) => (
                           <li key={bullet}>{bullet}</li>
                         ))}
@@ -126,18 +126,18 @@ const BlogPost: React.FC = () => {
                     ) : null}
 
                     {section.code ? (
-                      <pre className="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-950 p-5 text-sm leading-7 text-slate-100">
+                      <pre className="overflow-x-auto rounded-2xl border border-border bg-muted p-5 text-sm leading-7 text-foreground">
                         <code>{section.code}</code>
                       </pre>
                     ) : null}
 
                     {section.table ? (
-                      <div className="overflow-hidden rounded-2xl border border-slate-200">
+                      <div className="overflow-hidden rounded-2xl border border-border">
                         <table className="w-full border-collapse text-sm">
-                          <thead className="bg-slate-50">
+                          <thead className="bg-muted">
                             <tr>
                               {section.table.headers.map((header) => (
-                                <th key={header} className="border-b border-slate-200 px-4 py-3 text-left font-semibold text-slate-700">
+                                <th key={header} className="border-b border-border px-4 py-3 text-left font-semibold text-foreground">
                                   {header}
                                 </th>
                               ))}
@@ -145,9 +145,9 @@ const BlogPost: React.FC = () => {
                           </thead>
                           <tbody>
                             {section.table.rows.map((row, rowIndex) => (
-                              <tr key={`${section.title}-row-${rowIndex}`} className="odd:bg-white even:bg-slate-50/70">
+                              <tr key={`${section.title}-row-${rowIndex}`} className="odd:bg-card even:bg-muted/50">
                                 {row.map((cell) => (
-                                  <td key={cell} className="border-b border-slate-200 px-4 py-3 text-slate-700">
+                                  <td key={cell} className="border-b border-border px-4 py-3 text-foreground/90">
                                     {cell}
                                   </td>
                                 ))}
@@ -158,14 +158,14 @@ const BlogPost: React.FC = () => {
                       </div>
                     ) : null}
 
-                    {section.note ? <p className="text-base italic text-slate-600">{section.note}</p> : null}
+                    {section.note ? <p className="text-base italic text-muted-foreground">{section.note}</p> : null}
                   </section>
                 ))}
               </div>
 
-              <div className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 flex items-center justify-between gap-4">
-                <p className="text-sm text-slate-600">Share this post if it was useful.</p>
-                <button type="button" onClick={handleShare} className="inline-flex items-center gap-2 text-sm font-medium text-slate-950">
+              <div className="mt-12 rounded-2xl border border-border bg-muted px-5 py-4 flex items-center justify-between gap-4">
+                <p className="text-sm text-muted-foreground">Share this post if it was useful.</p>
+                <button type="button" onClick={handleShare} className="inline-flex items-center gap-2 text-sm font-medium text-foreground">
                   <Share2 className="h-4 w-4" />
                   Share
                 </button>
