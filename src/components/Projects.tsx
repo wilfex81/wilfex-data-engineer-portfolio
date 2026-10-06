@@ -114,6 +114,88 @@ const Projects: React.FC = () => {
       rating: 5,
     },
     {
+      title: "Crypto Stream",
+      description:
+        "Real-time crypto trade data platform that streams Binance WebSocket events through Kafka and S3 into a Databricks lakehouse, Snowflake warehouse, and Metabase dashboard.",
+      techStack: [
+        "Python",
+        "WebSockets",
+        "Kafka",
+        "AWS S3",
+        "Databricks",
+        "Unity Catalog",
+        "Delta Lake",
+        "dbt",
+        "Snowflake",
+        "Terraform",
+      ],
+      liveLink: "https://github.com/wilfex81/crypto-stream",
+      images: [
+        `${import.meta.env.BASE_URL}project-images/crypto_architecture.svg`,
+        `${import.meta.env.BASE_URL}project-images/Dashboard.png`,
+        `${import.meta.env.BASE_URL}project-images/DataBricks_Crypto_Stream.png`,
+      ],
+      longDescription:
+        "A real-time streaming pipeline built to explore ingestion, medallion architecture, grain and cardinality design, lake/lakehouse/warehouse separation, orchestration, and CI/CD. The pipeline runs on serverless Databricks compute and delivers curated trade analytics to a Snowflake warehouse and Metabase dashboard.",
+      sections: [
+        {
+          title: "Project Overview",
+          paragraphs: [
+            "Crypto Stream ingests live public Binance trade data and carries it through a complete data platform: Kafka handles the event stream, S3 provides durable raw landing, Databricks Auto Loader builds the bronze layer, dbt creates conformed silver and gold models in Unity Catalog, and a scheduled load publishes gold data to Snowflake for dashboarding.",
+            "The entire ingest → transform → warehouse load flow runs as one scheduled Databricks Workflow, with serverless compute throughout. The project is designed for personal, non-commercial, educational use and requires no Binance API key.",
+          ],
+        },
+        {
+          title: "Architecture",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/crypto_architecture.svg`,
+          ],
+          bullets: [
+            "Python and websockets connect to the Binance public trade stream and publish events to the crypto-trades-raw Kafka topic.",
+            "A Kafka consumer writes immutable raw JSON to an S3 landing area.",
+            "Databricks Auto Loader incrementally ingests the landing data into Unity Catalog bronze Delta tables.",
+            "Native dbt tasks build silver and gold models, followed by a Spark SQL load job into Snowflake.",
+            "Metabase serves a candle chart and cross-symbol volume and trade-count rankings.",
+          ],
+        },
+        {
+          title: "Data Grain & Modeling",
+          bullets: [
+            "Bronze keeps one row per trade per symbol exactly as emitted by Binance.",
+            "Silver retains trade grain while deduplicating on trade ID and applying type-conforming transformations.",
+            "Gold includes dim_symbol, fact_trade partitioned by trade date, and fct_ohlc_1m for rolling one-minute OHLC/VWAP windows.",
+            "The OHLC model intentionally uses a different grain from the trade-level fact table, making aggregation boundaries explicit and testable.",
+          ],
+        },
+        {
+          title: "Databricks Workflow Runs",
+          images: [
+            `${import.meta.env.BASE_URL}project-images/DataBricks_Crypto_Stream.png`,
+          ],
+          paragraphs: [
+            "The Databricks Workflow orchestrates the full production path in a single scheduled job: bronze ingestion, dbt transformations, and the final Snowflake load. The run history provides a clear operational view of task duration, success, cancellation, and failure states across each pipeline stage.",
+          ],
+        },
+        {
+          title: "Engineering & Delivery",
+          bullets: [
+            "Terraform provisions AWS S3 and IAM, Databricks Unity Catalog objects, and Snowflake resources.",
+            "Databricks Asset Bundles package and deploy the workflow and its resources.",
+            "GitHub Actions lint the code and run dbt build/test in isolated ci_silver and ci_gold schemas so CI never touches live data.",
+            "The scheduled workflow coordinates ingest, dbt transformation, and Snowflake loading with retries and observable task runs.",
+          ],
+        },
+        {
+          title: "Repository & Resources",
+          paragraphs: [
+            "GitHub: github.com/wilfex81/crypto-stream",
+            "The repository includes the producer, consumer, Auto Loader notebook, dbt project, Terraform infrastructure, warehouse load job, Databricks bundle, and CI/CD workflows.",
+          ],
+        },
+      ],
+      rating: 5,
+    },
+    {
       title: "Lakehouse Data Warehouse",
       description:
         "Cloud-native rebuild of a classic SQL Server data warehouse tutorial using AWS S3, Databricks Auto Loader, Delta Lake, Unity Catalog, dbt, Airflow, and Terraform.",
